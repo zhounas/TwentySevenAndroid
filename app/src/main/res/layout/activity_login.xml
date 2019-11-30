@@ -33,6 +33,7 @@
             android:textColorHint="#fff"
             android:background="@color/editText"
             app:layout_constraintBottom_toBottomOf = "@+id/logo"
+            android:inputType="textPersonName"
             android:hint="User name"/>
 
 

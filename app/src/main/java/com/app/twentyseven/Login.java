@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class Login extends AppCompatActivity {
-    private String loginURL = "http://192.168.0.38/AZ27/login.php";
     private RequestQueue queue;
     private EditText username,password;
     @Override
@@ -28,8 +26,8 @@ public class Login extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
         super.onCreate(savedInstanceState);
-        String androidID = android.provider.Settings.System.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        loginURL += "?android_id="+androidID;
+
+        final String loginURL = com.app.twentyseven.Settings.ServerUrl +"AZ27/login.php?android_id="+ Settings.getAndroidId(this);
         setContentView(R.layout.activity_login);
         Button loginButton=findViewById(R.id.loginButton);
         username=findViewById(R.id.username);
@@ -39,16 +37,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                loginURL += "&username="+ username.getText()+"&password="+ password.getText();
-                StringRequest SRequest = new StringRequest(Request.Method.GET, loginURL, new Response.Listener<String>() {
+                String URL= loginURL +"&username="+ username.getText()+"&password="+ password.getText();
+                StringRequest SRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         tmsg(response);
                         if (response.substring(0, response.indexOf(' ')).equals("Bienvenu")) {
 
                             Intent Main = new Intent(Login.this, MainActivity.class);
-                            Main.putExtra("username", username.getText());
                             startActivity(Main);
                             finish();
                         } else if (response.substring(0, response.indexOf(' ')).equals("Error")) {

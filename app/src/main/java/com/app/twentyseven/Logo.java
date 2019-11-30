@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,9 +14,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+
 public class Logo extends AppCompatActivity {
     private int Time=4000;
-    private String loginURL = "http://192.168.0.38/AZ27/login.php";
+    private String loginURL ;
     private RequestQueue queue;
     private boolean loggedin = false;
     Intent nextpage;
@@ -26,8 +26,8 @@ public class Logo extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
-        String androidID = android.provider.Settings.System.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        loginURL += "?id_status="+androidID;
+
+        loginURL = com.app.twentyseven.Settings.ServerUrl +"AZ27/login.php?id_status="+ Settings.getAndroidId(this);
 
 
         StringRequest SRequest = new StringRequest(Request.Method.GET, loginURL, new Response.Listener<String>() {
