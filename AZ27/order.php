@@ -9,25 +9,16 @@ if(isset($_GET['android_id']) AND isset($_GET['querry'])){
 		$row=mysqli_fetch_assoc($result);
 		$utilisateur=$row['utilisateur'];
 		if($row['status']==1){
-
-
 			if($querry != ""){
-
 				if(mysqli_query($dbc,"INSERT INTO commandes values(null,'$querry','utilisateur',NOW() )")){
-					echo "ok ".mysqli_insert_id($dbc)."";
-				
+					echo "ok ".mysqli_insert_id($dbc)."";	
 				}else{echo "Error ".mysqli_error($dbc)."";}
-
 			}else{echo "0,Error";}
-			
-
-
 		}else{
 			echo"Not connected";
 		}	
 	}else{
 		echo"Not connected ";
-	}
-	
+	}	
 }
 ?>

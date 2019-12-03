@@ -16,7 +16,7 @@ import com.android.volley.toolbox.Volley;
 
 
 public class Logo extends AppCompatActivity {
-    private int Time=4000;
+    private int Time = 4000;
     private String loginURL ;
     private RequestQueue queue;
     private boolean loggedin = false;
@@ -27,14 +27,13 @@ public class Logo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        loginURL = com.app.twentyseven.Settings.ServerUrl +"AZ27/login.php?id_status="+ Settings.getAndroidId(this);
-
+        loginURL = com.app.twentyseven.Settings.ServerUrl + "AZ27/login.php?id_status=" + Settings.getAndroidId(this);
 
         StringRequest SRequest = new StringRequest(Request.Method.GET, loginURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.substring(0, response.indexOf(' ')).equals("Bienvenu")) {
-                    loggedin=true;
+                    loggedin = true;
                     tmsg(response);
                 }
             }
@@ -60,7 +59,8 @@ public class Logo extends AppCompatActivity {
             }
         },Time);
     }
-private void tmsg(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-        }
+
+    private void tmsg(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 }

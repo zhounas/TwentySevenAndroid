@@ -20,7 +20,7 @@ import com.android.volley.toolbox.Volley;
 
 public class Login extends AppCompatActivity {
     private RequestQueue queue;
-    private EditText username,password;
+    private EditText username, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

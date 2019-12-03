@@ -16,7 +16,6 @@ $querry=$_GET['querry'];
 			}
 		}
 	}elseif(is_numeric($querry)){
-
 		$result=mysqli_query($dbc,"SELECT * FROM elements WHERE id_famille='$querry' ");
 		if(mysqli_num_rows($result)>0){
 			echo mysqli_num_rows($result);
@@ -31,7 +30,5 @@ $querry=$_GET['querry'];
 		}
 	}
 }
-
-
 
 ?>

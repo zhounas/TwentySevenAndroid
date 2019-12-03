@@ -28,16 +28,15 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 
 public class Order extends AppCompatActivity {
-    private String newOrder,orderURL = com.app.twentyseven.Settings.ServerUrl+"AZ27/order.php";;
-    private String[] splitedOrder,orderElementInfos;
-    private int nOfSelectedElements,n;
+    private String newOrder, orderURL = com.app.twentyseven.Settings.ServerUrl + "AZ27/order.php";
+    private String[] splitedOrder, orderElementInfos;
+    private int nOfSelectedElements, n;
     private double add;
     private RequestQueue queue;
-    TableLayout table;
+    public TableLayout table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         table = (TableLayout) findViewById(R.id.orderTable);
@@ -50,85 +49,72 @@ public class Order extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             if(nOfSelectedElements>0){
                 uploadOrder(newOrder);
             }else{
                 tmsg("Commande Vide!");
             }
-
             }
         });
-
-
-
-
-
-
-
     }
 
     public void onBackPressed() {
-goBack();
+        goBack();
         return;
-
     }
+
     private void goBack(){
         Intent Main = new Intent(Order.this, MainActivity.class);
         Main.putExtra("order", newOrder);
-        Main.putExtra("nOfSelectedElements", ""+nOfSelectedElements);
+        Main.putExtra("nOfSelectedElements", "" + nOfSelectedElements);
         startActivity(Main);
         finish();
     }
 
-
-    private void showOrder(String order,int nOfSelectedElements){
+    private void showOrder(String order, int nOfSelectedElements){
         table.removeAllViews();
         add=0;
 
-            TableRow labels=new TableRow(this);
-            labels.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
-            table.addView(labels);
+        TableRow labels=new TableRow(this);
+        labels.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+        table.addView(labels);
 
-            TextView labelName = new TextView(this);
-            labelName.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
-            labelName.setText("Articles");
-            labelName.setTextColor(Color.parseColor("#FFFFFF"));
-            labelName.setGravity(Gravity.CENTER);
-            labels.addView(labelName);
+        TextView labelName = new TextView(this);
+        labelName.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+        labelName.setText("Articles");
+        labelName.setTextColor(Color.parseColor("#FFFFFF"));
+        labelName.setGravity(Gravity.CENTER);
+        labels.addView(labelName);
 
-            TextView labelprice = new TextView(this);
-            labelprice.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
-            labelprice.setText("Prix");
-            labelprice.setTextColor(Color.parseColor("#FFFFFF"));
-            labelprice.setGravity(Gravity.CENTER);
-            labels.addView(labelprice);
+        TextView labelprice = new TextView(this);
+        labelprice.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
+        labelprice.setText("Prix");
+        labelprice.setTextColor(Color.parseColor("#FFFFFF"));
+        labelprice.setGravity(Gravity.CENTER);
+        labels.addView(labelprice);
 
-            TextView labeldelete = new TextView(this);
-            labeldelete.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.1f));
-            labeldelete.setText("Sup.");
-            labeldelete.setGravity(Gravity.CENTER);
-            labeldelete.setTextColor(Color.parseColor("#FFFFFF"));
+        TextView labeldelete = new TextView(this);
+        labeldelete.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.1f));
+        labeldelete.setText("Sup.");
+        labeldelete.setGravity(Gravity.CENTER);
+        labeldelete.setTextColor(Color.parseColor("#FFFFFF"));
 
-            labels.addView(labeldelete);
-
+        labels.addView(labeldelete);
 
         if (nOfSelectedElements > 0) {
-
             splitedOrder = order.split(",");
             n = 1;
             for (int row = 0; row < nOfSelectedElements; row++) {
-                final int line=n;
+                final int line = n;
                 orderElementInfos = splitedOrder[n].split(":");
                 final String name = orderElementInfos[0];
                 final  double price = Double.parseDouble(orderElementInfos[1]);
-                add+=(price*100);
+                add += (price * 100);
 
                 TableRow tableRow = new TableRow(this);
                 tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
                 tableRow.setGravity(Gravity.CENTER);
                 table.addView(tableRow);
-
 
                 TextView articleName= new TextView (this);
                 articleName.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
@@ -136,7 +122,6 @@ goBack();
                 articleName.setTextColor(Color.parseColor("#FFFFFF"));
                 articleName.setPadding(10, 10, 10, 10);
                 tableRow.addView(articleName);
-
 
                 TextView priceView = new TextView(this);
                 priceView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
@@ -160,10 +145,10 @@ goBack();
                 });
                 tableRow.addView(delButton);
                 n++;
-
             }
         }
-        TableRow totalRow=new TableRow(this);
+
+        TableRow totalRow = new TableRow(this);
         totalRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
         table.addView(totalRow);
 
@@ -176,8 +161,8 @@ goBack();
 
         TextView totalPrice = new TextView(this);
         totalPrice.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
-        add=(double)add/100;
-        totalPrice.setText(add+"€");
+        add=(double) add / 100;
+        totalPrice.setText(add + "€");
         totalPrice.setTextColor(Color.parseColor("#FFFFFF"));
         totalPrice.setGravity(Gravity.RIGHT);
         totalRow.addView(totalPrice);
@@ -187,35 +172,26 @@ goBack();
         totalRow.addView(vide);
     }
 
-
-    private void removeElement ( int number){
-        newOrder="";
+    private void removeElement (int number){
+        newOrder = "";
         for (int i = 1; i <= nOfSelectedElements; i++) {
             if (i != number) {
                 newOrder += "," + splitedOrder[i];
             }
         }
         nOfSelectedElements -= 1;
-
         showOrder(newOrder, nOfSelectedElements);
-
     }
 
     private void uploadOrder(String order){
-
         queue = Volley.newRequestQueue(this);
         String URL=orderURL+"?android_id="+com.app.twentyseven.Settings.getAndroidId(this)+"&querry="+ URLEncoder.encode(order);
-
 
         StringRequest SRequest = new StringRequest(Request.Method.GET, ""+URL+"", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.substring(0, response.indexOf(' ')).equals("ok")) {
                     orderSaved(response);
-
-
-
-
                 }
             }
         }, new Response.ErrorListener() {
@@ -226,21 +202,19 @@ goBack();
 
         });
         queue.add(SRequest);
-
-
-
     }
-    private void orderSaved(String response){
 
-        newOrder="";
-        nOfSelectedElements=0;
+    private void orderSaved(String response){
+        newOrder = "";
+        nOfSelectedElements = 0;
         TextView mainText = (TextView) findViewById(R.id.mainText);
         mainText.setText("Commande " + response.substring(response.indexOf(' ')) + " Enregistré");
         showOrder(newOrder,0);
     }
-    private void tmsg(String msg){
 
-        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
+    private void tmsg(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+
     private static DecimalFormat df2 = new DecimalFormat("0.00");
 }

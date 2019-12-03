@@ -8,10 +8,7 @@ if(isset($_GET['android_id']) AND isset($_GET['querry'])){
 	if(mysqli_num_rows($result)==1){
 		$row=mysqli_fetch_assoc($result);
 		if($row['status']==1){
-
-
 			if($querry == "0"){
-
 				$result=mysqli_query($dbc,"SELECT * FROM familles");
 				if(mysqli_num_rows($result)>0){
 					echo mysqli_num_rows($result);
@@ -38,13 +35,11 @@ if(isset($_GET['android_id']) AND isset($_GET['querry'])){
 				}else{echo "0,Error";}
 			}
 
-
 		}else{
 			echo"Not connected";
 		}	
 	}else{
 		echo"Not connected";
 	}
-	
 }
 ?>

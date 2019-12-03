@@ -1,8 +1,6 @@
 <?php
 $dbc=mysqli_connect("localhost","root","root","twentyseven");
 
-
-
 if (isset($_GET['android_id']) AND isset($_GET['logout'])){
 	$android_id=$_GET['android_id'];
 	if(mysqli_query($dbc,"UPDATE utilisateurs SET status= '0',android_id='' WHERE android_id='$android_id' ") )
@@ -10,11 +8,6 @@ if (isset($_GET['android_id']) AND isset($_GET['logout'])){
 		echo"Deconnexion ";
 	}
 }
-
-
-
-
-
 
 if(isset($_GET['username']) AND isset($_GET['password']) AND isset($_GET['android_id'])){
 	$username=$_GET['username'];
@@ -31,11 +24,6 @@ if(isset($_GET['username']) AND isset($_GET['password']) AND isset($_GET['androi
 	}
 }
 
-
-
-
-
-
 if(isset($_GET['id_status'])){
 	$android_id=$_GET['id_status'];
 	$result=mysqli_query($dbc,"SELECT * FROM utilisateurs WHERE android_id= '$android_id'");
@@ -48,7 +36,6 @@ if(isset($_GET['id_status'])){
 		}	
 	}else{
 		echo"Not connected ";
-	}
-	
+	}	
 }
 ?>
